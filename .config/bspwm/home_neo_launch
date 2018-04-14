@@ -1,0 +1,8 @@
+#! /bin/sh
+
+xrdb ~/.Xresources_home
+bspc rule -a *:urxvt -o state=floating focus=on locked=on rectangle=700x350+1370+285 && urxvt -hold -e neofetch --size 32% --gap 8 &
+sleep 0.05
+xrdb ~/.Xresources
+sleep 0.05
+id=$(bspc query -N -n .focused -d)

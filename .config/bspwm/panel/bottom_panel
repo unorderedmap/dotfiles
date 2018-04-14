@@ -1,0 +1,44 @@
+#! /bin/bash
+
+base_font="artwiz lemon-8"
+
+WIN="\uf0f4" # coffee
+HME="\uf015"
+BSH="\uf1fc"
+CHR="\uf268"
+
+gap=10
+height=30
+i_width=80
+t_width=$(($i_width*10+9*$gap))
+panel_start=$((1720-($t_width)/2))
+desk_indent=0
+
+tr="ff"
+
+color0="71949a"
+color1="71949a"
+
+for d in `seq 0 9`;
+do
+  if (( $d % 2 == 0 )); then
+      color=$color1
+  else
+      color=$color0
+  fi
+
+  if [ $d -eq 0 ]; then
+      icon=$HME
+  elif [ $d -eq 7 ]; then
+      icon=$CHR
+  elif [ $d -eq 8 ]; then
+      icon=$CHR
+  elif [ $d -eq 9 ]; then
+      icon=$BSH
+  else
+      icon=$WIN
+  fi
+
+  ~/.config/bspwm/panel/desk_panel "${d}" "${icon}" | lemonbar -p -f "${base_font}" -f "fontawesome-10" -B "#${tr}${color}" -g ${i_width}x${height}+$(($panel_start+$desk_indent))+$((1440-($height*2))) &
+  desk_indent=$(($desk_indent+i_width+$gap))
+done 

@@ -1,0 +1,40 @@
+#! /bin/sh
+
+RED=#93503e
+GRN=#7a8648
+YLW=#9d8554
+CYN=#566e6b
+WHT=#aaaaaa
+BRN=#9b7059
+CHR=#9a6d40
+LGR=#72765b
+DGR=#5f5e6c
+MAG=#7b6064
+SEP=" "
+TAB="   "
+CPU="\uf0e4"
+MEM="\uf1c0"
+TMP="\uf06d"
+VOL="\uf028"
+PAC="\uf284"
+DAT="\uf073"
+CLK="\uf017"
+WIN="\uf248"
+GRS="\uf085"
+DRV="\uf0a0"
+CRM="\uf268"
+
+chromium() {
+	chr=$(($(ps -aux | grep "chromium --type=renderer" | wc -l)-2))
+	max=$(( $chr > 0 ? $chr : 0 ))
+	echo "$max"
+}
+
+windows() {
+	echo "$(bspc query -N -n .leaf | wc -l)"
+}
+
+while true; do
+	echo -e "%{c}%{F$YLW}$WIN$SEP$(windows)%{F-}$TAB%{F$CHR}$CRM$SEP$(chromium)%{F-}"
+	sleep 3
+done

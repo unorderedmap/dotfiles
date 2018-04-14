@@ -1,0 +1,54 @@
+#! /bin/sh
+
+RED=#93503e
+GRN=#7a8648
+YLW=#9d8554
+CYN=#566e6b
+WHT=#aaaaaa
+BRN=#9b7059
+CHR=#9a6d40
+LGR=#72765b
+DGR=#5f5e6c
+MAG=#7b6064
+SEP=" "
+TAB="   "
+LOA="\uf200"
+FAN="\uf0e4"
+MEM="\uf1c0"
+TMP="\uf06d"
+VOL="\uf028"
+PAC="\uf284"
+DAT="\uf073"
+CLK="\uf017"
+WIN="\uf009"
+GRS="\uf085"
+DRV="\uf0a0"
+CRM="\uf268"
+
+cpuload() {
+	echo "$(top -bn2 | grep %Cpu | tail -8 | awk -F'[:|/]' '{print $2}' | sed 's/ //g' | awk '{SUM += $1} END {printf "%.1f", SUM}')%"
+}
+
+memused() {
+	info=$(free -m)
+	memused=$(echo "$info" | awk 'NR == 2 {print $3}')
+	memtotal=$(echo "$info" | awk 'NR == 2 {print $2}')
+	echo "$(echo $memused $memtotal | awk '{printf "%.f", ($1/$2)*100}')%"
+}
+
+cputemp() {
+	echo "$(sensors | grep "Package id 0" | cut -d'+' -f2 | head -c2)°"
+}
+
+cpufan() {
+	echo "$(sensors | awk '/fan1/ {print $2,$3}' | tr -dc '0-9' | awk '{printf "%.f", ($1/1800)*100}')%"
+}
+
+processes() {
+        echo "$(ps -aux | grep "unorderedmap" | wc -l)"
+}
+
+
+while true; do
+	echo -e "%{c}%{F$RED}$LOA$SEP$(cpuload)%{F-}$TAB%{F$RED}$MEM$SEP$(memused)%{F-}$TAB%{F$RED}$TMP$SEP$(cputemp)%{F-}$TAB%{F$RED}$FAN$SEP$(cpufan)%{F-}$TAB%{F$RED}$GRS$SEP$(processes)%{F-}"
+done

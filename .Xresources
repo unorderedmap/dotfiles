@@ -1,0 +1,13 @@
+#include "~/.colors/scamptown_fsaug5"
+
+URxvt.perl-ext:
+URxvt.perl-ext-common:
+urxvt*cursorUnderline:	1
+urxvt*cursorBlink:	false
+urxvt*pointerBlank:     true
+urxvt*scrollBar:	false
+urxvt*depth:		32
+urxvt*internalBorder:	40
+urxvt*dynamicColors: 	on
+urxvt*font: xft:artwiz lemon:size=8
+urxvt*letterSpace: 1

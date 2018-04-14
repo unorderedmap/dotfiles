@@ -1,0 +1,63 @@
+#! /bin/sh
+
+base_font="artwiz lemon-8"
+
+cpu_size_base=255
+hard_size_base=90
+vol_size_base=35
+ping_size_base=35
+date_size_base=55
+clock_size_base=50
+pac_size_base=25
+misc_size_base=80
+gpu_size_base=225
+song_size_base=285
+mpc_size_base=285
+
+margin=25
+gap=8
+
+cpu_size=$(($cpu_size_base+$margin))
+hard_size=$(($hard_size_base+$margin))
+date_size=$(($date_size_base+$margin))
+ping_size=$(($ping_size_base+$margin))
+pac_size=$(($pac_size_base+$margin))
+vol_size=$(($vol_size_base+$margin))
+clock_size=$(($clock_size_base+$margin))
+misc_size=$(($misc_size_base+$margin))
+gpu_size=$(($gpu_size_base+$margin))
+song_size=$(($song_size_base+$margin))
+mpc_size=$(($mpc_size_base+$margin))
+
+cpu_indent=0
+hard_indent=$(($cpu_indent+$cpu_size+$gap))
+date_indent=$(($hard_indent+$hard_size+$gap))
+ping_indent=$(($date_indent+$date_size+$gap))
+pac_indent=$(($ping_indent+$ping_size+$gap))
+vol_indent=$(($pac_indent+$pac_size+$gap))
+clock_indent=$(($vol_indent+$vol_size+$gap))
+misc_indent=$(($clock_indent+$clock_size+$gap))
+gpu_indent=$(($misc_indent+$misc_size+$gap))
+song_indent=$(($gpu_indent+$gpu_size+$gap))
+
+offset=30
+
+panel_start=$((1720-($gpu_indent+gpu_size)/2))
+echo "$(( $panel_start+$gpu_indent+$gpu_size ))"
+
+tr="f5"
+
+color0="33303b"
+color1="33303b"
+
+~/.config/bspwm/panel/mpc_panel | lemonbar -p -f "${base_font}" -f "fontawesome-8" -B "#${tr}${color1}" -g ${mpc_size}x30+830+${offset} &
+~/.config/bspwm/panel/cpu_panel | lemonbar -p -f "${base_font}" -f "fontawesome-8" -B "#${tr}${color0}" -g ${cpu_size}x30+$(($panel_start+$cpu_indent))+${offset} &
+~/.config/bspwm/panel/hard_panel | lemonbar -p -f "${base_font}" -f "fontawesome-8" -B "#${tr}${color1}" -g ${hard_size}x30+$(($panel_start+$hard_indent))+${offset} &
+~/.config/bspwm/panel/date_panel | lemonbar -p -f "${base_font}" -f "fontawesome-8" -B "#${tr}${color0}" -g ${date_size}x30+$(($panel_start+$date_indent))+${offset} &
+~/.config/bspwm/panel/ping_panel | lemonbar -p -f "${base_font}" -f "fontawesome-8" -B "#${tr}${color1}" -g ${ping_size}x30+$(($panel_start+$ping_indent))+${offset} &
+~/.config/bspwm/panel/pac_panel | lemonbar -p -f "${base_font}" -f "fontawesome-8" -B "#${tr}${color0}" -g ${pac_size}x30+$(($panel_start+$pac_indent))+${offset} &
+~/.config/bspwm/panel/vol_panel | lemonbar -p -f "${base_font}" -f "fontawesome-8" -B "#${tr}${color1}" -g ${vol_size}x30+$(($panel_start+$vol_indent))+${offset} &
+~/.config/bspwm/panel/clock_panel | lemonbar -p -f "${base_font}" -f "fontawesome-8" -B "#${tr}${color0}" -g ${clock_size}x30+$(($panel_start+$clock_indent))+${offset} &
+~/.config/bspwm/panel/misc_panel | lemonbar -p -f "${base_font}" -f "fontawesome-8" -B "#${tr}${color1}" -g ${misc_size}x30+$(($panel_start+$misc_indent))+${offset} &
+~/.config/bspwm/panel/gpu_panel | lemonbar -p -f "${base_font}" -f "fontawesome-8" -B "#${tr}${color0}" -g ${gpu_size}x30+$(($panel_start+$gpu_indent))+${offset} &
+~/.config/bspwm/panel/song_panel | lemonbar -p -f "${base_font}" -f "fontawesome-8" -B "#${tr}${color1}" -g ${song_size}x30+$(($panel_start+$song_indent))+${offset} &

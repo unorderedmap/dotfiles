@@ -1,0 +1,16 @@
+#! /bin/sh
+
+SEP=" "
+TAB="   "
+
+while true; do
+  if [ $1 -eq $(bspc query -D -d --names) ]; then
+      color="#be5b69"
+  else
+      color="#554757"
+  fi
+
+  amnt_windows=$(bspc query -N -n .window -d "${1}" | wc -l)
+  echo -e "%{c}%{F$color}$2$SEP$amnt_windows%{F-}"
+  sleep 1
+done

@@ -1,0 +1,30 @@
+#! /bin/sh
+
+RED=#93503e
+GRN=#7a8648
+YLW=#9d8554
+CYN=#566e6b
+GRY=#888888
+BRN=#9b7059
+CHR=#9a6d40
+LGR=#72765b
+DGR=#5f5e6c
+MAG=#7b6064
+ERR=#ff0000
+SEP=" "
+TAB="   "
+LOA="\uf200"
+FAN="\uf0e4"
+MEM="\uf1c0"
+TMP="\uf06d"
+NET="\uf012"
+VOL="\uf028"
+VLS="\uf027"
+VLO="\uf026"
+EXC="\uf071"
+
+while true; do
+	pn=$(timeout .8 ping www.google.com -c 1 -s 24 | sed '2!d;s/.*time=\([0-9]*\).*/\1/')
+	if [ -z $pn ] ; then echo -e "%{c}%{F$ERR}$SEP${EXC}%{F-}"; else echo -e "%{c}%{F$GRY}${NET}$SEP${pn}%{F-}"; fi
+	sleep 30
+done

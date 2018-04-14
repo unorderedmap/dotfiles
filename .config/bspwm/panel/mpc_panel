@@ -1,0 +1,63 @@
+#! /bin/sh
+
+RED=#93503e
+GRN=#7a8648
+YLW=#9d8554
+CYN=#566e6b
+WHT=#aaaaaa
+BRN=#9b7059
+CHR=#9a6d40
+LGR=#72765b
+DGR=#5f5e6c
+MAG=#7b6064
+ERR=#ff0000
+ORA=#AF6B42
+SEP=" "
+TAB="   "
+LOA="\uf200"
+FAN="\uf0e4"
+MEM="\uf1c0"
+TMP="\uf06d"
+VOL="\uf028"
+PAC="\uf284"
+DAT="\uf073"
+CLK="\uf017"
+WIN="\uf009"
+GRS="\uf085"
+DRV="\uf0a0"
+CRM="\uf268"
+PLL="\uf1c7"
+HGL="\uf252"
+PLY="\uf144"
+PAU="\uf28b"
+STP="\uf28d"
+
+playing() {
+	status=$(mpc status | awk 'NR==2 {print $1}' | tr -d '[]')
+	if [ "$status" == "playing" ]; then
+		echo -e "%{F$RED}$SEP${PLY}"
+	elif [ "$status" == "paused" ]; then
+		echo -e "%{F$RED}$SEP${PAU}"
+	else
+		echo -e "%{F$RED}$SEP${STP}"
+	fi
+}
+
+progress_song() {
+	echo "$(mpc status | awk 'NR==2 {print $3 $4}' | sed 's/(/ \(/g')"
+}
+
+progress_playlist() {
+	prog=$(mpc status | awk 'NR==2 {print $2}')
+	echo "${prog:1}"
+}
+
+volume() {
+	echo "$(mpc volume | tr -cd '0-9')"
+
+}
+
+while true; do
+	echo -e "%{c}$(playing)%{F-}$TAB%{F$ORA}$PLL$SEP$(progress_playlist)%{F-}$TAB%{F$ORA}$HGL$SEP$(progress_song)%{F-}$TAB%{F$ORA}$VOL$SEP$(volume)%{F-}"
+	sleep 3
+done

@@ -1,0 +1,44 @@
+#! /bin/sh
+
+RED=#93503e
+GRN=#7a8648
+YLW=#9d8554
+CYN=#566e6b
+WHT=#b0b0a2
+STH=#977D5E
+BRN=#9b7059
+CHR=#9a6d40
+LGR=#72765b
+DGR=#5f5e6c
+MAG=#7b6064
+ORA=#AF6B42
+SEP=" "
+TAB="   "
+CPU="\uf0e4"
+MEM="\uf1c0"
+TMP="\uf06d"
+VOL="\uf028"
+PAC="\uf284"
+DAT="\uf073"
+CLK="\uf017"
+WIN="\uf009"
+GRS="\uf085"
+DRV="\uf0a0"
+CRM="\uf268"
+MSC="\uf001"
+
+song() {
+	mpc=$(mpc current)
+	length=${#mpc}
+	if [[ $length -lt 40 ]]; then
+	    echo "$(mpc current | cut -c 1-40)"
+        else
+            start_=$(($length-40))
+	    echo "$(mpc current | cut -c ${start_}-$length)"
+        fi
+}
+
+while true; do
+	echo -e "%{c}%{F$ORA}$MSC$SEP$(song)%{F-}"
+	sleep 3
+done

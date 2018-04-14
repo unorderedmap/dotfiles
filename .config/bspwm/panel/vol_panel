@@ -1,0 +1,44 @@
+#! /bin/sh
+
+RED=#93503e
+GRN=#7a8648
+YLW=#9d8554
+CYN=#566e6b
+WHT=#aaaaaa
+BRN=#9b7059
+CHR=#9a6d40
+LGR=#72765b
+DGR=#5f5e6c
+MAG=#7b6064
+SEP=" "
+TAB="   "
+LOA="\uf200"
+FAN="\uf0e4"
+MEM="\uf1c0"
+TMP="\uf06d"
+VOL="\uf028"
+VLS="\uf027"
+VLO="\uf026"
+
+volume() {
+    switch=`amixer get Master | awk '/Mono:/ {print $6}'`
+    vol=$(amixer get Master | awk -F"[%[]" '/dB/ { print$2 }')
+
+    if [ "$switch" = "[on]" ]; then
+        if [ $vol -lt 10 ]; then
+            echo "$VLO$SEP$vol"
+        elif [ $vol -lt 50 ]; then
+            echo "$VLS$SEP$vol"
+        else
+            echo "$VOL$SEP$vol"
+        fi
+    elif [ "$switch" = "[off]" ]; then
+        echo "${VLO}${SEP}0"
+    fi
+    echo ""
+}
+
+while true; do
+	echo -e "%{c}%{F$MAG}$(volume)%{F-}"
+	sleep 0.5
+done

@@ -1,0 +1,51 @@
+#! /bin/sh
+
+RED=#93503e
+GRN=#7a8648
+YLW=#9d8554
+CYN=#566e6b
+WHT=#aaaaaa
+BRN=#9b7059
+CHR=#9a6d40
+LGR=#72765b
+DGR=#5f5e6c
+MAG=#7b6064
+SEP=" "
+TAB="   "
+LOA="\uf200"
+FAN="\uf0e4"
+MEM="\uf1c0"
+TMP="\uf06d"
+VOL="\uf028"
+PAC="\uf284"
+DAT="\uf073"
+CLK="\uf017"
+WIN="\uf009"
+GRS="\uf085"
+DRV="\uf0a0"
+CRM="\uf268"
+
+gpuload() {
+	echo "$(nvidia-smi -a | grep "Gpu" --color=never | tr -dc '0-9')%"
+}
+
+gpumemused() {
+	echo "$(nvidia-smi -a | grep "Memory.*%" --color=never | tr -dc '0-9')%"
+}
+
+gputemp() {
+	echo "$(nvidia-smi -a | grep "GPU Current Temp" --color=never | tr -dc '0-9')°"
+}
+
+gpufan() {
+	echo "$(nvidia-smi -a | grep Fan --color=never | tr -dc '0-9')%"
+}
+
+gpuprocesses() {
+	echo "$(nvidia-smi -a | grep "Process ID" | wc -l)"
+}
+
+while true; do
+	echo -e "%{c}%{F$GRN}$LOA$SEP$(gpuload)%{F-}$TAB%{F$GRN}$MEM$SEP$(gpumemused)%{F-}$TAB%{F$GRN}$TMP$SEP$(gputemp)%{F-}$TAB%{F$GRN}$FAN$SEP$(gpufan)%{F-}$TAB%{F$GRN}$GRS$SEP$(gpuprocesses)%{F-}"
+	sleep 3
+done
